@@ -19,7 +19,7 @@ Moreover, some basic mathematics are supported:
 • MUL <MEM1> <MEM2>: As above, with multiplication.
 • DIV <MEM1> <MEM2>: As above, with (integer) division. Division by zero is considered an error.
 
-Whenever it encounters a nonsensical situation, it simply replies “I’m afraid I can’t do that” and 
+Whenever it encounters a nonsensical situation (syntax error, invalid instruction), it simply replies “I’m afraid I can’t do that” and 
 stops, ignoring all further instructions.
 
 Attempting to set any memory register to a value outside of its supported range of −2^42 and 2^42 is 
