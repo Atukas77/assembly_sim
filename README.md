@@ -1,54 +1,49 @@
-The program has four “registers” of memory that can only hold integer numbers and have 
-the names A, B, C, and D. 
-It also has 2048 addresses of simulated RAM memory which can be 
-accessed via their address between 0 and 2047
+This program simulates a pseudo-assembly language with four integer-based registers: A, B, C, and D. Additionally, it includes 2048 memory addresses (simulated RAM), which can be accessed using addresses ranging from 0 to 2047.
 
-It understands the following instructions related to memory:
+Supported Instructions: 
 
-• LOADA <MEM> <ADDR>: Load the value at memory address ADDR into register MEM.
-• LOAD <MEM>: Execute LOADA, using the value in register A as address ADDR.
-• LOADI <MEM> <VALUE>: Sets MEM to the given value.
-• STOREA <MEM> <ADDR>: Store the value contained in register MEM at memory address ADDR. 
-• STORE <MEM>: Execute STOREA, using the value in register A as address ADDR.
-Attempting to access an address not between 0 (inclusive) and 2048 (exclusive) is considered an error. 
-Moreover, some basic mathematics are supported:
-• MOVE <MEM1> <MEM2>: Copies the value of MEM2 to MEM1.
-• ADDI <MEM> <VALUE>: Add VALUE to MEM and store the result in MEM.
-• ADD <MEM1> <MEM2>: Add the value in MEM2 to MEM1 and store the result in MEM1.
-• SUB <MEM1> <MEM2>: As above, with subtraction.
-• MUL <MEM1> <MEM2>: As above, with multiplication.
-• DIV <MEM1> <MEM2>: As above, with (integer) division. Division by zero is considered an error.
+Memory Operations:  
+LOADA: Loads the value from memory address ADDR into register MEM.  
+LOAD: Performs LOADA, using the value in register A as ADDR.  
+LOADI: Assigns the specified value directly to MEM.  
+STOREA: Saves the value in register MEM to memory address ADDR.  
+STORE: Executes STOREA, using the value in register A as ADDR.  
+Accessing memory outside the range of 0 to 2047 results in an error.  
+Arithmetic Operations:  
+MOVE: Copies the value from MEM2 into MEM1.  
+ADDI: Adds a given VALUE to MEM and stores the result in MEM.  
+ADD: Adds the value of MEM2 to MEM1, storing the result in MEM1.  
+SUB: Performs subtraction in the same manner as ADD.  
+MUL: Multiplies MEM1 by MEM2 and stores the result in MEM1.  
+DIV: Performs integer division (MEM1 ÷ MEM2) and stores the result in MEM1. Division by zero triggers an error.  
+Error Handling:  
+Any instruction with invalid syntax or unrecognized commands results in the message:  
+"I'm afraid I can't do that", after which execution halts.  
+Register values must remain within the range of −2^42 to 2^42, exceeding this limit is considered an error.
+Writing to registers P or X is also disallowed.  
+Conditional and Unconditional Jumps:  
+JMP: Skips forward STEPS instructions; if STEPS is negative, execution moves backward. This also updates register P.  
+Example: JMP 0 acts as a no-op, while JMP -1 creates an infinite loop.  
+JMPR: Performs a JMP where STEPS is determined by MEM.  
+JZ: If MEM holds zero, performs JMP STEPS.  
+JLT: If MEM1 is less than MEM2, executes JMP STEPS.  
+Program Termination:  
+Execution stops when encountering the END instruction.  
 
-Whenever it encounters a nonsensical situation (syntax error, invalid instruction), it simply replies “I’m afraid I can’t do that” and 
-stops, ignoring all further instructions.
+Example input:  
+LOADI C 1   
+PRINT C  
+ADD A C  
+LOADI B 100  
+JLT A B -3  
+PRINT A  
+LOADI C 1  
+ADD A C  
+JMP -1  
+PRINT A  
+END  
 
-Attempting to set any memory register to a value outside of its supported range of −2^42 and 2^42 is 
-considered an error. Attempting to write to P or X is considered an error.
-
-Also, it is able to do some (conditional) skips:
-• JMP <STEPS>: Skip over the next STEPS instructions. If STEPS is negative, go back this many steps. 
-This also modifies P. Explanation: This means that JMP 0 is a “no-op” (it skips zero instructions) 
-and JMP -1 is an infinite loop.
-• JMPR <MEM>: Perform a JMP where STEPS equals the value of MEM.
-• JZ <MEM> <STEPS>: If the value of MEM is zero, perform JMP STEPS.
-• JLT <MEM1> <MEM2> <STEPS>: If the value of MEM1 is less than the value of MEM2, perform JMP STEPS.
-
-The end of the program is indicated by END.
-
-Example input:
-LOADI C 1 
-PRINT C
-ADD A C 
-LOADI B 100 
-JLT A B -3 
-PRINT A 
-LOADI C 1 
-ADD A C 
-JMP -1 
-PRINT A 
-END
-
-Example output:
-1
-100
-I'm afraid I can't do that
+Example output:  
+1  
+100  
+I'm afraid I can't do that  
