@@ -1,5 +1,9 @@
 This program simulates a pseudo-assembly language with four integer-based registers: A, B, C, and D. Additionally, it includes 2048 memory addresses (simulated RAM), which can be accessed using addresses ranging from 0 to 2047.
 
+Cloning the repository:  
+git clone https://github.com/Atukas77/Networking-Toolkit.git  
+cd Networking-Toolkit  
+
 Supported Instructions: 
 
 Memory Operations:  
