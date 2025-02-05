@@ -1,7 +1,7 @@
 The program has four “registers” of memory that can only hold integer numbers and have 
 the names A, B, C, and D. 
 It also has 2048 addresses of simulated RAM memory which can be 
-accessed via their address between 0 and 2048
+accessed via their address between 0 and 2047
 
 It understands the following instructions related to memory:
 
